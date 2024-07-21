@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded",() =>{
 })
 
 
-
 //TODo:
 function changeTheme(){
     // set to web page
