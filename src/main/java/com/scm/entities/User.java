@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -29,7 +30,7 @@ public class User {
     private String userId;
 
     @Column(nullable = false)
-    private String userName;
+    private String name;
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -47,6 +48,7 @@ public class User {
 
     private boolean phoneVerified = false;
 
+    @Enumerated
     // Self, Google, facebook, linkedin , twitter
     private Providers provider=Providers.SELF;
 
