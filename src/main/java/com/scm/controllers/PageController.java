@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.scm.entities.User;
 import com.scm.forms.UserForm;
+import com.scm.helper.Message;
+import com.scm.helper.MessageType;
 import com.scm.services.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -72,7 +76,7 @@ public class PageController {
 
     // processing register
     @PostMapping("/do-register")
-    public String processRegister(@ModelAttribute UserForm userForm){
+    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session){
         System.out.println("Processing registration");
         // fetch the form data
         // UserForm
@@ -81,17 +85,30 @@ public class PageController {
         // todo
 
         // convert userform to user
-        User user = User.builder()
-        .name(userForm.getName())
-        .email(userForm.getEmail())
-        .password(userForm.getPassword())
-        .about(userForm.getAbout())
-        .phoneNumber(userForm.getPhoneNumber())
-        .profilePic("https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg")
-        .build();
+        // User user = User.builder()
+        // .name(userForm.getName())
+        // .email(userForm.getEmail())
+        // .password(userForm.getPassword())
+        // .about(userForm.getAbout())
+        // .phoneNumber(userForm.getPhoneNumber())
+        // .profilePic("https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg")
+        // .build();
+
+        User user = new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setAbout(userForm.getAbout());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setProfilePic("https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg");
+
         // save to database
         User savedUser = userService.savUser(user);
         System.out.println("User saved");
+
+        // add the message
+        Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
+        session.setAttribute("message", message);
         
         // redirect
         return "redirect:/register";
