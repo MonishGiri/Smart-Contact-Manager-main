@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.scm.entities.User;
 import com.scm.forms.UserForm;
@@ -109,7 +108,8 @@ public class PageController {
         user.setProfilePic("https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg");
 
         // save to database
-        User savedUser = userService.savUser(user);
+        // User savedUser = userService.savUser(user);
+        userService.savUser(user);
         System.out.println("User saved");
 
         // add the message

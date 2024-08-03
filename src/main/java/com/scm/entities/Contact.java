@@ -41,11 +41,13 @@ public class Contact {
     @Column(length = 10000)
     private String description;
 
+    @Builder.Default
     private boolean favorite=false;
 
     private String websiteLink;
     private String linkedInLink;
     
+    @Builder.Default
     @OneToMany(mappedBy = "contact",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SocialLink> links = new ArrayList<>();
 
