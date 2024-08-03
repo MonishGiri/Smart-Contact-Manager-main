@@ -3,8 +3,8 @@ package com.scm.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -57,9 +57,16 @@ public class SecurityConfig {
 
         // configuration
 
+        // configure urls public or private
         httpSecurity.authorizeHttpRequests(authorize -> {
-            authorize.requestMatchers("/home").permitAll();
+            // authorize.requestMatchers("/home","/register","/services").permitAll();
+            authorize.requestMatchers("user/**").authenticated();
+            authorize.anyRequest().permitAll();
         });
+
+        // form default login
+        // if you have to change anything regarding form login change here
+        httpSecurity.formLogin(Customizer.withDefaults());
 
         return httpSecurity.build();
     } 
